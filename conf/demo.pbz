@@ -1,0 +1,5 @@
+#jobname        source                  target          frequency
+test1            ndk@node1:/mnt/test     /node1/test     +3d
+test2            ndk@node1:/mnt/test2    /node1/test2    +1m
+test2            ndk@node1:/mnt/test2    /node1/test2    +1y
+test3            ndk@node1:/mnt/test3    /node1/test3    *|*/3|01
