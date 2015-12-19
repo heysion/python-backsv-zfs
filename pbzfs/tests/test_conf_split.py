@@ -10,27 +10,20 @@ print(os.getcwd())
 the_conf_data = []
 with open('conf/demo.pbz') as f:
     for l in f:
-        the_conf_data.append(l.strip())
+        if(l[0] != '#'):
+            the_conf_data.append(l.strip())
 f.close()
-#print the_conf_data
-pindex = 0
-for x in the_conf_data:
-    if x[0] == '#':
-        del the_conf_data[pindex]
-    pindex = pindex + 1;
-#print the_conf_data
 
 pattern = re.compile(r"\s*")
-for x in the_conf_data:
-    res = pattern.split(x)
+for cf_data in the_conf_data:
+    res = pattern.split(cf_data)
     freq_origin_str = res[3]
-    print(freq_origin_str)
-    freq_temp = {"freq_unit":"day","freq_value":x}
+    freq_temp = {"freq_unit":"day","freq_value":cf_data}
     if(freq_origin_str[0] == r"+"):
         freq_temp_value = ""
-        for x in freq_origin_str[1:]:
-            if(not x.isdigit()):
-                freq_temp_unit = x.lower()
+        for cf_date_str in freq_origin_str[1:]:
+            if(not cf_date_str.isdigit()):
+                freq_temp_unit = cf_date_str.lower()
                 if(freq_temp_unit == "m"):
                     freq_temp["freq_unit"]="M"
                     break
@@ -43,13 +36,11 @@ for x in the_conf_data:
                 else:
                     print("Fixme!!")
             else:
-                freq_temp_value += x
+                freq_temp_value += cf_date_str
         freq_temp["freq_unit"],freq_temp["freq_value"] = freq_temp["freq_unit"] == "Y" and ("M",int(freq_temp_value)*12) or (freq_temp["freq_unit"],int(freq_temp_value))
-        #freq_temp["freq_value"]=(int(freq_temp_value))*12 if freq_temp["freq_unit"] == "M"  else freq_temp["freq_value"]=int(freq_temp_value)
-        print(freq_temp)
-        print("abc")
+        #print(freq_temp)
     elif (res[3].find(r"|")):
-        print("123")
+        pass
     else:
         print("Fixme!!")
     #pdz_config = {"jobname":res[0],"source":res[1],"target":res[2],"freq":res[3]}
