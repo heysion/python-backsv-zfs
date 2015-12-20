@@ -45,8 +45,11 @@ def conf_parse_freq(freq_origin_str):
     #print(pdz_config)
 
 pattern = re.compile(r"\s*")
+pdz_config = []
 for cf_data in the_conf_data:
     res = pattern.split(cf_data)
-    print(conf_parse_freq(res[3]))
+    job_config = {"jobname":res[0],"source":res[1],"targe":res[2],"freq":conf_parse_freq(res[3])}
+    pdz_config.append(job_config)
+print(pdz_config)
 
 
