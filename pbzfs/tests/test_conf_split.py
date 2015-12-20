@@ -2,11 +2,11 @@
 import os
 import re
 
-the_month = range(1,13)
-the_days = range(1,32)
-print(os.getcwd())
+#the_month = range(1,13)
+#the_days = range(1,32)
+#print(os.getcwd())
 os.chdir("../../")
-print(os.getcwd())
+#print(os.getcwd())
 the_conf_data = []
 with open('conf/demo.pbz') as f:
     for l in f:
@@ -14,10 +14,7 @@ with open('conf/demo.pbz') as f:
             the_conf_data.append(l.strip())
 f.close()
 
-pattern = re.compile(r"\s*")
-for cf_data in the_conf_data:
-    res = pattern.split(cf_data)
-    freq_origin_str = res[3]
+def conf_parse_freq(freq_origin_str):
     freq_temp = {"freq_unit":"day","freq_value":cf_data}
     if(freq_origin_str[0] == r"+"):
         freq_temp_value = ""
@@ -39,11 +36,17 @@ for cf_data in the_conf_data:
                 freq_temp_value += cf_date_str
         freq_temp["freq_unit"],freq_temp["freq_value"] = freq_temp["freq_unit"] == "Y" and ("M",int(freq_temp_value)*12) or (freq_temp["freq_unit"],int(freq_temp_value))
         #print(freq_temp)
-    elif (res[3].find(r"|")):
+    elif (freq_origin_str[3].find(r"|")):
         pass
     else:
         print("Fixme!!")
+    return freq_temp
     #pdz_config = {"jobname":res[0],"source":res[1],"target":res[2],"freq":res[3]}
     #print(pdz_config)
+
+pattern = re.compile(r"\s*")
+for cf_data in the_conf_data:
+    res = pattern.split(cf_data)
+    print(conf_parse_freq(res[3]))
 
 
