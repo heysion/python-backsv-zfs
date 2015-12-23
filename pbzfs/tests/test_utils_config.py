@@ -3,12 +3,13 @@
 import sys
 try:
     from ..utils import config
-    print("import a")
 except:
     sys.path.append("../")
     from utils import config
-    print("import b")
 
 if __name__ == "__main__":
-    print(config.pbz_read_conf("../../conf/demo.pbz"))
+    test_config = config.pbz_read_conf("../../conf/demo.pbz")
+    print(test_config)
+    for x in test_config:
+        print("rsync -rav -e ssh %s %s"%(x["source"],x["targe"]))
     pass
